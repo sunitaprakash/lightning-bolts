@@ -6,6 +6,9 @@ from torch.nn import functional as F
 
 from pl_bolts.models.gans.basic.components import Discriminator, Generator
 
+import wandb
+from pytorch_lightning.loggers import WandbLogger
+
 
 class GAN(LightningModule):
     """Vanilla GAN implementation.
@@ -195,6 +198,10 @@ def cli_main(args=None):
     trainer.fit(model, datamodule=dm)
     return dm, model, trainer
 
+     wandb.log({"loss": d_loss})
+
+     # Optional
+     wandb.watch(model)
 
 if __name__ == "__main__":
     dm, model, trainer = cli_main()
